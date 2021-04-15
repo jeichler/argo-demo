@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps
+  namespace: managed-hosting-admin
+  labels:
+    app.kubernetes.io/instance: seed
+spec:
+  destination:
+    namespace: managed-hosting-admin
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: apps
+    repoURL: 'https://github.com/jeichler/argo-demo.git'
+    targetRevision: main
+  syncPolicy:
+    automated: {}
